@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.27)
-
+#set(CMAKE_PREFIX_PATH D:/opt/Qt/Qt5.12.11/5.12.11/msvc2017")
+# set(CMAKE_PREFIX_PATH "D:/opt/Qt/6.7.0/mingw_64")
 project(ShWriter VERSION 0.1 LANGUAGES CXX)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
