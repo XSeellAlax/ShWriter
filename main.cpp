@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include "highlighter.h"
 
+#include "FileInfo/file.h"
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
         &app, []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.loadFromModule("ShWriter", "Main");
-
+    show();
+    // std::cout << "hello world. " << std::endl;
     return app.exec();
 }

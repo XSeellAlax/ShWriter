@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
-#set(CMAKE_PREFIX_PATH D:/opt/Qt/Qt5.12.11/5.12.11/msvc2017")
-# set(CMAKE_PREFIX_PATH "D:/opt/Qt/6.7.0/mingw_64")
+
 project(ShWriter VERSION 0.1 LANGUAGES CXX)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
@@ -12,14 +11,9 @@ qt_add_executable(appShWriter  main.cpp)
 qt_add_qml_module(appShWriter
     URI ShWriter
     VERSION 1.0
-    QML_FILES 
-        Main.qml
-        QML_FILES WriteEdit.qml
-        QML_FILES ShellView.qml
-        QML_FILES leaderDialog.qml
-        SOURCES highlighter.h
-        SOURCES highlighter.cpp
-        QML_FILES CustomTextEditor.qml
+    RESOURCES pic.qrc
+    QML_FILES textEdit/CustomTextEditor.qml textEdit/Colors.qml textEdit/Sidebar.qml
+    QML_FILES Main.qml
 )
 
 target_compile_features(appShWriter PRIVATE cxx_std_20)
@@ -36,6 +30,8 @@ set_target_properties(appShWriter PROPERTIES
 target_link_libraries(appShWriter
     PRIVATE 
         Qt6::Quick
+        FileInfo
+        # MyWidget
 )
 
 include(GNUInstallDirs)
@@ -45,15 +41,9 @@ install(TARGETS appShWriter
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-
-
-
-
-
-
-
-
-
+add_subdirectory(FileInfo)
+# add_subdirectory(MyWidget)
+# add_subdirectory(MyWidget)
 
 
 
