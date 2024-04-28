@@ -1,15 +1,25 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.3
+import "../Config"
+import FileIO
 
 Item {
     id: root
     property string fontFamily: "Consolas"
-    property var fontPointSize: 15
+    property int fontPointSize: 15
+    property color background: "#4B4A4A"
     property alias readOnly: edit.readOnly
-    property alias text: edit.text
+    property alias edit: edit
     property alias selectionColor: edit.selectionColor
     property alias textDocument: edit.textDocument
+    // property alias read: readFile
+
+    //  文件读取
+    FileIO
+    {
+        id: fileIO
+    }
 
     Flickable {
         id: flick
@@ -17,8 +27,8 @@ Item {
         anchors {
             fill: parent
         }
-        contentWidth: /*edit.paintedWidth*/ parent.width
-//        width: parent.width
+
+        contentWidth: parent.width
 
         contentHeight: edit.paintedHeight + 5
         clip: true
@@ -33,20 +43,23 @@ Item {
            else if (contentY+height <= r.y+r.height)
                contentY = r.y+r.height-height + 10;
         }
+
         Rectangle {
-            id: textBg
+            id: textBg // 文本背景
             z: 0
-            anchors.left: edit.left
-            anchors.leftMargin: 5
-            color: "#333"
+            width: parent.width
+            height: panding.contentHeight
+            // color: "#4B4A4A"
+            color: background
+            // color: Config.background
             opacity: 0.2
             radius: 4
-            Behavior on width {
-               NumberAnimation { duration: 1000; easing.type: Easing.OutElastic }
-            }
-            Behavior on height {
-               NumberAnimation { duration: 1000; easing.type: Easing.OutElastic }
-            }
+            // Behavior on width {
+            //    NumberAnimation { duration: 1000; easing.type: Easing.OutElastic }
+            // }
+            // Behavior on height {
+            //    NumberAnimation { duration: 1000; easing.type: Easing.OutElastic }
+            // }
         }
         Column{
             id:lineNumberLabel
@@ -56,9 +69,9 @@ Item {
             Repeater {
                model: edit.lineCount;
                Rectangle {
-                   width: lineNumberWidth(edit.lineCount)
+                   width: lineNumberWidth(edit.lineCount)*1.5
                    height: panding.contentHeight
-                   color: "#333"
+                   color: "#292828"
                    Text {
                        id:showLineNumber
                        anchors{
@@ -67,7 +80,8 @@ Item {
                            horizontalCenter: parent.horizontalCenter
                        }
                        text:index + 1
-                       color: "gray"
+                       color: "white"
+                       anchors.margins: 10
                        font.pointSize: fontPointSize
                        font.family: fontFamily
                    }
@@ -76,11 +90,13 @@ Item {
         }
         TextEdit{
             id: panding
-            font.pointSize: fontPointSize
             visible: false
+            font.pointSize: fontPointSize
             font.family: fontFamily
-            text: "56155"
+            anchors.margins: 10
+
         }
+        //  主文本编辑器
         TextEdit {
             property bool ctrlPressed: false
             anchors {
@@ -88,16 +104,18 @@ Item {
                 leftMargin: -4
             }
             id: edit
+            color: "white"
             readOnly: root.readOnly
             selectByMouse: true
-            tabStopDistance: 20
+            // tabStopDistance: 20
             activeFocusOnPress: true
             focus: true
             clip: true
             selectionColor: Material.accent
             wrapMode: TextEdit.WordWrap
-            leftPadding: 5
-            topPadding: 0.5
+            // leftPadding: 5
+            // topPadding: 0.5
+
             font.pointSize: fontPointSize
             font.family: fontFamily
             width: flick.width - 10
@@ -106,17 +124,26 @@ Item {
             anchors.margins: 10
             cursorVisible: true
             cursorDelegate: cursorDelegate
-            onPaintedWidthChanged: {
-                textBg.width = edit.paintedWidth + 10
-            }
+            // onPaintedWidthChanged: {
+            //     textBg.width = edit.paintedWidth + 10
+            // }
+            // onCursorPositionChanged: {
+            //     console.log(cursorPosition)
+            //     textBg.y = edit.cursorPosition * panding.height
+            // }
+
             onPaintedHeightChanged: {
                 textBg.height = edit.paintedHeight + 1
+
+                // textBg.y = edit.cursorPosition.y
             }
+            //
             onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
             MouseArea {
                 anchors {
                     fill: parent
                 }
+                id: mouse
                 propagateComposedEvents: true
                 onClicked: mouse.accepted = false;
                 onPressed: mouse.accepted = false;
@@ -125,7 +152,8 @@ Item {
                 onPositionChanged: mouse.accepted = false;
                 onPressAndHold: mouse.accepted = false;
                 cursorShape: Qt.IBeamCursor
-                onWheel: {
+                onWheel:
+                wheel=>{
                     var datl = wheel.angleDelta.y / 120
                     if (datl>0 && edit.ctrlPressed) {
                         fontPointSize += 1
@@ -135,13 +163,15 @@ Item {
                     wheel.accepted = false
                 }
             }
-            Keys.onPressed: {
+            Keys.onPressed:
+            event=>{
                 if(event.modifiers === Qt.ControlModifier) {
                     ctrlPressed = true
                 }
                 event.accepted = false
             }
-            Keys.onReleased: {
+            Keys.onReleased:
+            event=>{
                 if(!(event.modifiers&Qt.ControlModifier)) {
                     ctrlPressed = false
                 }
@@ -151,15 +181,15 @@ Item {
         ScrollIndicator.horizontal: ScrollIndicator { }
         ScrollIndicator.vertical: ScrollIndicator { }
     }
+
+    //文本光标
     Component {
         id: cursorDelegate
         Rectangle {
             id: cursor
-            color: Material.accent
-//            color: "red"
+            color: "red"
             width: 10;
             height: 5
-//            visible: parent.fuc
             SequentialAnimation {
                 running: true;
                 loops: ColorAnimation.Infinite
@@ -197,6 +227,23 @@ Item {
            ++width;
         }
         return space = width * fontPointSize
+    }
+
+    function readFile()
+    {
+        fileIO.open();
+        while(fileIO.atEnd()==false){
+            edit.text +=fileIO.readline();
+        }
+        console.log("文件读取成功");
+        console.log(fileIO.getFilePath())
+    }
+
+    function save()
+    {
+        var context = edit.text
+        fileIO.saveFile(context);
+        console.log(fileIO.getFilePath())
     }
 }
 

@@ -1,12 +1,15 @@
 #include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
-
-#include "FileInfo/file.h"
+#include <QQmlContext>
+#include "FileInfo/filerw.h"
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
+    qmlRegisterType<FileRW,1>("FileIO",1,0,"FileIO");
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed,
         &app, []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);

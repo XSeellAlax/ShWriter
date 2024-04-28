@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Controls
+// import QtQuick.
 import QtQuick.Layouts
-
-import "./textEdit"
-
+import "./TextEdit"
+import "./Bar"
 
 ApplicationWindow {
     width: 1100
@@ -11,33 +11,42 @@ ApplicationWindow {
     visible: true
     id: root
     title: qsTr("★ShWrite★")
-    // flags: Qt.ForegroundRole
     color: "#222436"
-    menuBar: MenuBar {
+    menuBar:
+    MenuBar {
         Menu {
-            title: qsTr("文件")
+            title: qsTr("文件(&F)")
             MenuItem {
-                text: qsTr("&Open")
-                onTriggered: console.log("Open action triggered");
+                text: qsTr("&打开...")
+                onTriggered: {
+                    editor.readFile()
+                }
+                // source.ic
             }
             MenuItem {
-                text: qsTr("&New File")
-                onTriggered: fileDialog.open()
+                text: qsTr("&保存...")
+                onTriggered:{
+                    editor.save()
+                }
             }
 
             MenuItem {
-                text: qsTr("Exit")
+                text: qsTr("&退出...")
                 onTriggered: Qt.quit();
             }
         }
         Menu {
-            title: qsTr("工具")
+            title: "编辑"
+        }
+
+        Menu {
+            title: qsTr("工具(&T)")
             MenuItem {
                 text: qsTr("&Open")
                 onTriggered: console.log("Open action triggered");
                 Image {
 
-                    source: ":icon/image/.1.png"
+                    // source: ":icon/image/.1.png"
                 }
             }
 
@@ -51,7 +60,7 @@ ApplicationWindow {
             }
         }
         Menu {
-            title: qsTr("偏好")
+            title: qsTr("调试(&D)")
             MenuItem {
                 text: qsTr("&Change")
             }
@@ -65,14 +74,16 @@ ApplicationWindow {
             }
         }
 
+        Menu {
+            title: "设置(&S)"
+        }
+
+        Menu {
+            title: "帮助(&U)"
+        }
+
     }
 
-    // CustomTextEditor{
-    //     anchors.fill: parent
-    // }
-
-    // Set up the layout of the main components in a row:
-    // [ Sidebar, Navigation, Editor ]
     RowLayout {
         anchors.fill: parent
         spacing: 0
@@ -91,9 +102,9 @@ ApplicationWindow {
             Layout.fillHeight: true
             // Customized handle to drag between the Navigation and the Editor.
             handle: Rectangle {
-                implicitWidth: 5
-                color: SplitHandle.pressed ? Colors.color2 : Colors.background
-                border.color: SplitHandle.hovered ? Colors.color2 : Colors.background
+                implicitWidth: 1
+                // color: SplitHandle.pressed ? Colors.color2 : Colors.background
+                // border.color: SplitHandle.hovered ? Colors.color2 : Colors.background
                 opacity: SplitHandle.hovered || navigationView.width < 15 ? 1.0 : 0.0
 
                 Behavior on opacity {
@@ -106,33 +117,41 @@ ApplicationWindow {
             Rectangle {
                 id: navigationView
                 // color: Colors.surface1
-                color: "#171819"
+                // color: "#171819"
                 SplitView.preferredWidth: 100
                 SplitView.fillHeight: true
                 // The stack-layout provides different views, based on the
                 // selected buttons inside the sidebar.
+
+
                 StackLayout {
                     anchors.fill: parent
                     currentIndex: sidebar.currentTabIndex
-
                     // Shows the help text.
-                    // Text {
-                    //     text: qsTr("Click on the folder icon to the left to get started.")
-                    //     wrapMode: TextArea.Wrap
-                    //     color: Colors.text
-                    // }
-
-                    // Shows the files on the file system.
-                    // FileSystemView {
-                    //     id: fileSystemView
-                    //     color: Colors.surface1
-                    //     onFileClicked: path => root.currentFilePath = path
-                    // }
+                    ListView
+                    {
+                        id: list
+                        ListModel {
+                            ListElement {
+                                name: "Bill Smith"
+                                number: "555 3264"
+                            }
+                            ListElement {
+                                name: "John Brown"
+                                number: "555 8426"
+                            }
+                            ListElement {
+                                name: "Sam Wise"
+                                number: "555 0473"
+                            }
+                        }
+                    }
                 }
             }
 
+
             // The main view that contains the editor.
-            CustomTextEditor {
+            TextEditor {
                 id: editor
                 // showLineNumbers: root.showLineNumbers
                 // currentFilePath: root.currentFilePath
@@ -140,16 +159,5 @@ ApplicationWindow {
                 SplitView.fillHeight: true
             }
         }
-    }
-
-    Dialog{
-        id: fileDialog
-        Text {
-            id: name
-            text: qsTr("text")
-        }
-        anchors.centerIn: parent
-        width: parent.width/5
-        height: parent.height/4
     }
 }

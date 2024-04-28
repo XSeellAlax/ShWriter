@@ -10,5 +10,7 @@
         <file>images/icons/qt_logo.svg</file>
         <file>images/icons/read.svg</file>
         <file>images/icons/resize.svg</file>
+        <file>textEdit/TextMenu.qml</file>
+        <file>TextEdit/Editor.qml</file>
     </qresource>
 </RCC>
