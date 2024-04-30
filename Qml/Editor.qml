@@ -1,7 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.3
-import "../Config"
 import FileIO
 
 Item {
@@ -13,11 +12,10 @@ Item {
     property alias edit: edit
     property alias selectionColor: edit.selectionColor
     property alias textDocument: edit.textDocument
-    // property alias read: readFile
+    //property alias read: readFile
 
     //  文件读取
-    FileIO
-    {
+    FileIO {
         id: fileIO
     }
 
@@ -243,6 +241,7 @@ Item {
     {
         var context = edit.text
         fileIO.saveFile(context);
+        //FileRW.saveFile(context);
         console.log(fileIO.getFilePath())
     }
 }

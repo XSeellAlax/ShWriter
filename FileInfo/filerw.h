@@ -3,9 +3,11 @@
 // #include <fstream>
 #include <QFile>
 #include <QString>
+// #include <QQmlEngine>
 class FileRW : public QObject
 {
     Q_OBJECT
+    // QML_ELEMENT
 // private:
 
 public:

@@ -15,4 +15,5 @@ target_link_libraries(FileInfo
     Qt6::Core
     Qt6::Gui
     Qt6::Widgets
+    Qt6::Quick
 )

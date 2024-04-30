@@ -2,9 +2,8 @@ import QtQuick
 import QtQuick.Controls
 // import QtQuick.
 import QtQuick.Layouts
-import "./TextEdit"
-import "./Bar"
-
+//import ShellCoder
+import "./Qml"
 ApplicationWindow {
     width: 1100
     height: 600
@@ -151,7 +150,7 @@ ApplicationWindow {
 
 
             // The main view that contains the editor.
-            TextEditor {
+            Editor {
                 id: editor
                 // showLineNumbers: root.showLineNumbers
                 // currentFilePath: root.currentFilePath
