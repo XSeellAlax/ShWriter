@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.3
 import FileIO
-
+import QtQuick.Dialogs
 Item {
     id: root
     property string fontFamily: "Consolas"
@@ -10,9 +10,9 @@ Item {
     property color background: "#4B4A4A"
     property alias readOnly: edit.readOnly
     property alias edit: edit
-    property alias selectionColor: edit.selectionColor
+    property color selectonColor:"#0078D7"
     property alias textDocument: edit.textDocument
-    //property alias read: readFile
+    property string currFilePath : ""
 
     //  文件读取
     FileIO {
@@ -50,7 +50,7 @@ Item {
             // color: "#4B4A4A"
             color: background
             // color: Config.background
-            opacity: 0.2
+            opacity: 0.8
             radius: 4
             // Behavior on width {
             //    NumberAnimation { duration: 1000; easing.type: Easing.OutElastic }
@@ -67,7 +67,7 @@ Item {
             Repeater {
                model: edit.lineCount;
                Rectangle {
-                   width: lineNumberWidth(edit.lineCount)*1.5
+                   width: lineNumberWidth(edit.lineCount)*1.8
                    height: panding.contentHeight
                    color: "#292828"
                    Text {
@@ -80,8 +80,17 @@ Item {
                        text:index + 1
                        color: "white"
                        anchors.margins: 10
+                       // font.bold: bold
                        font.pointSize: fontPointSize
-                       font.family: fontFamily
+                       // font.family: fontFamily
+                   }
+                   Rectangle {
+                       id: indicator
+
+                       anchors.right: parent.right
+                       width: 1
+                       height: parent.height
+                       color: Qt.darker("#292828",3)
                    }
                }
             }
@@ -99,7 +108,7 @@ Item {
             property bool ctrlPressed: false
             anchors {
                 left:lineNumberLabel.right
-                leftMargin: -4
+                leftMargin: 10
             }
             id: edit
             color: "white"
@@ -109,7 +118,7 @@ Item {
             activeFocusOnPress: true
             focus: true
             clip: true
-            selectionColor: Material.accent
+            selectionColor: selectonColor
             wrapMode: TextEdit.WordWrap
             // leftPadding: 5
             // topPadding: 0.5
@@ -185,8 +194,8 @@ Item {
         id: cursorDelegate
         Rectangle {
             id: cursor
-            color: "red"
-            width: 10;
+            color: "gray"
+            width: 3;
             height: 5
             SequentialAnimation {
                 running: true;
@@ -229,12 +238,17 @@ Item {
 
     function readFile()
     {
+        edit.text = "";
         fileIO.open();
-        while(fileIO.atEnd()==false){
+        while(fileIO.atEnd()===false){
             edit.text +=fileIO.readline();
         }
         console.log("文件读取成功");
         console.log(fileIO.getFilePath())
+    }
+    function clear()
+    {
+        edit.text = "";
     }
 
     function save()
@@ -243,6 +257,7 @@ Item {
         fileIO.saveFile(context);
         //FileRW.saveFile(context);
         console.log(fileIO.getFilePath())
+
     }
 }
 

@@ -7,10 +7,17 @@ import "./Qml"
 ApplicationWindow {
     width: 1100
     height: 600
-    visible: true
+    // visible: true
     id: root
-    title: qsTr("★ShWrite★")
     color: "#222436"
+
+    minimumWidth: 200
+    minimumHeight: 100
+    visible: true
+    // color: Colors.background
+    // flags: Qt.Window | Qt.FramelessWindowHint
+    // title: qsTr("File System Explorer Example")
+
     menuBar:
     MenuBar {
         Menu {
@@ -154,6 +161,7 @@ ApplicationWindow {
                 id: editor
                 // showLineNumbers: root.showLineNumbers
                 // currentFilePath: root.currentFilePath
+                // anchors.topMargin: 10
                 SplitView.fillWidth: true
                 SplitView.fillHeight: true
             }

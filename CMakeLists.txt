@@ -13,9 +13,24 @@ qt_add_qml_module(appShellCoder
     VERSION 1.0
     QML_FILES 
         Main.qml
-        QML_FILES Qml/Sidebar.qml Qml/Editor.qml #Qml/Colors.qml
+        QML_FILES Qml/Sidebar.qml Qml/Editor.qml Qml/Colors.qml
+        # QML_FILES Qml/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml Qml/WindowDragHandler.qml
+        RESOURCES
+            "icons/folder_closed.svg"
+            "icons/folder_open.svg"
+            "icons/generic_file.svg"
+            "icons/globe.svg"
+            "icons/info_sign.svg"
+            "icons/light_bulb.svg"
+            "icons/read.svg"
+            "icons/resize.svg"
+            "icons/qt_logo.svg"
+            "icons/app_icon.svg"
+        # URI FIleSystemMode
+        #     VERSION 1.0
+        #     QML_FILES Qml/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml Qml/WindowDragHandler.qml
+        #     SOURCES filesystemmodel.h filesystemmodel.cpp
 )
-
 target_compile_features(appShellCoder PRIVATE cxx_std_20)
 
 set_target_properties(appShellCoder PROPERTIES
@@ -32,6 +47,11 @@ target_link_libraries(appShellCoder
     PRIVATE 
         Qt6::Quick
         FileInfo
+)
+# 设置单例类
+set_source_files_properties(qml/Colors.qml
+    PROPERTIES
+        QT_QML_SINGLETON_TYPE TRUE
 )
 
 include(GNUInstallDirs)

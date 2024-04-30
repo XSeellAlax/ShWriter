@@ -5,15 +5,14 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic
 // import FileSystemModule
-
+// import Colors
 Rectangle {
     id: root
 
     property alias currentTabIndex: topBar.currentIndex
     required property ApplicationWindow dragWindow
     readonly property int tabBarSpacing: 10
-
-    color: "#090A0C"
+    color: Colors.surface2
 
     component SidebarEntry: Button {
         id: sidebarButton
@@ -21,7 +20,7 @@ Rectangle {
         Layout.alignment: Qt.AlignHCenter
         Layout.fillWidth: true
 
-        icon.color: down || checked ? "#D5B35D" : "#383737"
+        icon.color: down || checked ? Colors.iconIndicator : Colors.icon
         icon.width: 27
         icon.height: 27
 
@@ -40,7 +39,7 @@ Rectangle {
             height: sidebarButton.icon.height * 1.2
 
             visible: sidebarButton.checked
-            color: "#A7B464"
+            color: Colors.color1
         }
     }
 
@@ -50,6 +49,8 @@ Rectangle {
         id: tabBarComponent
 
         Layout.fillWidth: true
+        Layout.fillHeight: false
+
         // ButtonGroup ensures that only one button can be checked at a time.
         ButtonGroup {
             buttons: tabBarComponent.contentChildren
@@ -83,7 +84,7 @@ Rectangle {
             // Shows help text when clicked.
             SidebarEntry {
                 id: infoTab
-                icon.source: "/images/icons/light_bulb.svg"
+                icon.source: "../icons/light_bulb.svg"
                 checkable: true
                 checked: true
             }
@@ -92,21 +93,21 @@ Rectangle {
             SidebarEntry {
                 id: filesystemTab
 
-                icon.source: "/images/icons/read.svg"
+                icon.source: "../icons/read.svg"
                 checkable: true
             }
         }
 
         // This item acts as a spacer to expand between the checkable and non-checkable buttons.
-        // Item {
-        //     Layout.fillHeight: true
-        //     Layout.fillWidth: true
+        Item {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
 
-        //     // Make the empty space drag our main window.
-        //     WindowDragHandler {
-        //         dragWindow: root.dragWindow
-        //     }
-        // }
+            // Make the empty space drag our main window.
+            // WindowDragHandler {
+            //     dragWindow: root.dragWindow
+            // }
+        }
 
         TabBar {
             id: bottomBar
@@ -115,9 +116,7 @@ Rectangle {
             // Opens the Qt website in the system's web browser.
             SidebarEntry {
                 id: qtWebsiteButton
-                // icon.source:
-                icon.source: "/images/icons/globe.svg"
-                // icon.source: "/images/icons/globe.svg"
+                icon.source: "../icons/globe.svg"
                 checkable: false
                 onClicked: Qt.openUrlExternally("https://www.qt.io/")
             }
@@ -126,7 +125,7 @@ Rectangle {
             SidebarEntry {
                 id: aboutQtButton
 
-                icon.source: "/images/icons/info_sign.svg"
+                icon.source: "../icons/info_sign.svg"
                 checkable: false
                 onClicked: aboutQtWindow.visible = !aboutQtWindow.visible
             }
