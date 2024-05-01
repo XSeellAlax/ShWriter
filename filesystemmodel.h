@@ -26,7 +26,7 @@ public:
     // Member functions from here
     QModelIndex rootIndex() const;
     void setRootIndex(const QModelIndex index);
-    void setInitialDirectory(const QString &path = getDefaultRootDir());
+    Q_INVOKABLE void setInitialDirectory(const QString &path = getDefaultRootDir());
 
     static QString getDefaultRootDir();
 

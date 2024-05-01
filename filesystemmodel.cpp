@@ -11,7 +11,7 @@
 FileSystemModel::FileSystemModel(QObject *parent) : QFileSystemModel(parent)
 {
     setFilter(QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot);
-    setInitialDirectory();
+    // setInitialDirectory("D:/");
 }
 
 QString FileSystemModel::readFile(const QString &filePath)

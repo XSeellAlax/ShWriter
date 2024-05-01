@@ -13,23 +13,6 @@ Item {
     property color selectonColor:"#0078D7"
     property alias textDocument: edit.textDocument
     property string currFilePath : ""
-    // background: Rectangle {
-    //     color: "#222436"
-    //     anchors.fill: parent
-    // }
-    Rectangle {
-        color: "#222436"
-        anchors.fill: parent
-    }
-    onCurrFilePathChanged: {
-        // fileIO.open("")
-        updateText();
-    }
-
-    //  文件读取
-    FileIO {
-        id: fileIO
-    }
 
     Flickable {
         id: flick
@@ -57,10 +40,11 @@ Item {
         Rectangle {
             id: textBg // 文本背景
             z: 0
-            width: parent.width
-            height: panding.contentHeight
+            anchors.fill: parent
+            // width: parent.width
+            // height: panding.contentHeight
             // color: "#4B4A4A"
-            color: background
+            color: "white"
             // color: Config.background
             opacity: 0.8
             radius: 4
@@ -79,9 +63,9 @@ Item {
             Repeater {
                model: edit.lineCount;
                Rectangle {
-                   width: lineNumberWidth(edit.lineCount)*1.8
+                   width: showLineNumber.width
                    height: panding.contentHeight
-                   color: "#292828"
+                   color: "white"
                    // color: Qt.light("#0078D7")
                    // color: "white"
                    Text {
@@ -91,22 +75,23 @@ Item {
                            bottomMargin: 1
                            horizontalCenter: parent.horizontalCenter
                        }
-                       text:index + 1
-                       color: "white"
+                       text:"* PS: " + index + ">"
+                       color: Qt.darker("#292828",3)
                        // color: "#0078D7"
                        anchors.margins: 10
                        // font.bold: bold
                        font.pointSize: fontPointSize
                        // font.family: fontFamily
                    }
-                   Rectangle {
-                       id: indicator
+                   // Rectangle {
+                   //     id: indicator
 
-                       anchors.right: parent.right
-                       width: 1
-                       height: parent.height
-                       color: Qt.darker("#292828",3)
-                   }
+                   //     anchors.right: parent.right
+                   //     width: 1
+                   //     height: parent.height
+                   //     color:
+                   //         /*Qt.darker("#292828",3)*/
+                   // }
                }
             }
         }
@@ -154,11 +139,11 @@ Item {
             //     textBg.y = edit.cursorPosition * panding.height
             // }
 
-            onPaintedHeightChanged: {
-                textBg.height = edit.paintedHeight + 1
+            // onPaintedHeightChanged: {
+            //     textBg.height = edit.paintedHeight + 1
 
-                // textBg.y = edit.cursorPosition.y
-            }
+            //     // textBg.y = edit.cursorPosition.y
+            // }
             //
             onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
             MouseArea {
@@ -251,39 +236,28 @@ Item {
         return space = width * fontPointSize
     }
 
-    function readFile()
-    {
-        edit.text = "";
-        fileIO.open();
-        while(fileIO.atEnd()===false){
-            edit.text +=fileIO.readline();
-        }
-        console.log("文件读取成功");
-        console.log(fileIO.getFilePath())
-    }
-    function updateText()
-    {
-        edit.text = "";
-        fileIO.open(currFilePath);
-        while(fileIO.atEnd()===false){
-            edit.text +=fileIO.readline();
-        }
-        console.log("文件读取成功");
-        console.log(fileIO.getFilePath())
-    }
+    // function readFile()
+    // {
+    //     edit.text = "";
+    //     fileIO.open();
+    //     while(fileIO.atEnd()===false){
+    //         edit.text +=fileIO.readline();
+    //     }
+    //     console.log("文件读取成功");
+    //     console.log(fileIO.getFilePath())
+    // }
+    // function clear()
+    // {
+    //     edit.text = "";
+    // }
 
-    function clear()
-    {
-        edit.text = "";
-    }
+    // function save()
+    // {
+    //     var context = edit.text
+    //     fileIO.saveFile(context);
+    //     //FileRW.saveFile(context);
+    //     console.log(fileIO.getFilePath())
 
-    function save()
-    {
-        var context = edit.text
-        fileIO.saveFile(context);
-        //FileRW.saveFile(context);
-        console.log(fileIO.getFilePath())
-
-    }
+    // }
 }
 

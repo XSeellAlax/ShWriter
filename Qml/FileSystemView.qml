@@ -4,7 +4,7 @@
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Controls.Basic
-// import FileSystemModule
+import FileSystemModule
 
 pragma ComponentBehavior: Bound
 
@@ -15,14 +15,23 @@ Rectangle {
     signal fileClicked(string filePath)
     property alias rootIndex: fileSystemTreeView.rootIndex
 
+    FileSystemModule
+    {
+        id: fileSystemModule
+    }
+    function setFill()
+    {
+        fileSystemModule.setData()
+    }
+
     TreeView {
         id: fileSystemTreeView
 
         property int lastIndex: -1
 
         anchors.fill: parent
-        model: FileSystemModel
-        rootIndex: FileSystemModel.rootIndex
+        model: fileSystemModule
+        rootIndex: fileSystemModule.rootIndex
         boundsBehavior: Flickable.StopAtBounds
         boundsMovement: Flickable.StopAtBounds
         clip: true
@@ -118,19 +127,19 @@ Rectangle {
                 }
             }
 
-            MyMenu {
-                id: contextMenu
-                Action {
-                    text: qsTr("Set as root index")
-                    onTriggered: {
-                        fileSystemTreeView.rootIndex = fileSystemTreeView.index(treeDelegate.row, 0)
-                    }
-                }
-                Action {
-                    text: qsTr("Reset root index")
-                    onTriggered: fileSystemTreeView.rootIndex = undefined
-                }
-            }
+            // MyMenu {
+            //     id: contextMenu
+            //     Action {
+            //         text: qsTr("Set as root index")
+            //         onTriggered: {
+            //             fileSystemTreeView.rootIndex = fileSystemTreeView.index(treeDelegate.row, 0)
+            //         }
+            //     }
+            //     Action {
+            //         text: qsTr("Reset root index")
+            //         onTriggered: fileSystemTreeView.rootIndex = undefined
+            //     }
+            // }
         }
 
         // Provide our own custom ScrollIndicator for the TreeView.
@@ -152,5 +161,9 @@ Rectangle {
                 }
             }
         }
+    }
+
+    function setDir(dir){
+        fileSystemModule.setInitialDirectory(dir)
     }
 }

@@ -13,7 +13,11 @@ qt_add_qml_module(appShellCoder
     VERSION 1.0
     QML_FILES 
         Main.qml
+        SOURCES
+            filesystemmodel.h
+            filesystemmodel.cpp
         QML_FILES Qml/Sidebar.qml Qml/Editor.qml Qml/Colors.qml
+        QML_FILES Qml/WindowDragHandler.qml QMl/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml
         # QML_FILES Qml/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml Qml/WindowDragHandler.qml
         RESOURCES
             "icons/folder_closed.svg"
@@ -28,7 +32,9 @@ qt_add_qml_module(appShellCoder
             "icons/app_icon.svg"
         # URI FIleSystemMode
         #     VERSION 1.0
-        #     QML_FILES Qml/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml Qml/WindowDragHandler.qml
+
+        QML_FILES Qml/Terminal.qml
+        QML_FILES Qml/HandleView.qml    #     QML_FILES Qml/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml Qml/WindowDragHandler.qml
         #     SOURCES filesystemmodel.h filesystemmodel.cpp
 )
 target_compile_features(appShellCoder PRIVATE cxx_std_20)
@@ -49,7 +55,7 @@ target_link_libraries(appShellCoder
         FileInfo
 )
 # 设置单例类
-set_source_files_properties(qml/Colors.qml
+set_source_files_properties(Qml/Colors.qml
     PROPERTIES
         QT_QML_SINGLETON_TYPE TRUE
 )

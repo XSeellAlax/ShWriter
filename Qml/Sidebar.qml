@@ -4,7 +4,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic
-// import FileSystemModule
+import FileSystemModule
 // import Colors
 Rectangle {
     id: root
@@ -104,9 +104,9 @@ Rectangle {
             Layout.fillWidth: true
 
             // Make the empty space drag our main window.
-            // WindowDragHandler {
-            //     dragWindow: root.dragWindow
-            // }
+            WindowDragHandler {
+                dragWindow: root.dragWindow
+            }
         }
 
         TabBar {

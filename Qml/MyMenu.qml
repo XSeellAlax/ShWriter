@@ -7,7 +7,6 @@ import FileSystemModule
 
 Menu {
     id: root
-
     delegate: MenuItem {
         id: menuItem
         contentItem: Item {

@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
     QGuiApplication::setWindowIcon(QIcon(":/qt/qml/FileSystemModule/icons/app_icon.svg"));
     QQmlApplicationEngine engine;
     qmlRegisterType<FileRW,1>("FileIO",1,0,"FileIO");
+    // qmlRegisterType<FileSystemModule,1>("FileSystemModule",1,0,"FileSystemModule");
+    qmlRegisterType<FileSystemModel,1>("FileSystemModule",1,0,"FileSystemModule");
     const QUrl url(u"qrc:/ShellCoder/Main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed,
         &app, []() { QCoreApplication::exit(-1); },

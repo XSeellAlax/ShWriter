@@ -29,6 +29,17 @@ bool FileRW:: open()
     return false;
 }
 
+bool FileRW::open(QString pathName){
+    _path = pathName;
+    if(_path.isEmpty()==false)
+    {
+        this->file.setFileName(_path);
+        file.open(QIODevice::ReadOnly);
+        return true;
+    }
+    return false;
+}
+
 QString FileRW::readline()
 {
     if(file.isOpen()==false){
