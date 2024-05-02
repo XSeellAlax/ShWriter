@@ -8,6 +8,8 @@ qt_standard_project_setup()
 
 qt_add_executable(appShellCoder  main.cpp)
 
+
+
 qt_add_qml_module(appShellCoder
     URI ShellCoder
     VERSION 1.0
@@ -17,8 +19,10 @@ qt_add_qml_module(appShellCoder
             filesystemmodel.h
             filesystemmodel.cpp
         QML_FILES Qml/Sidebar.qml Qml/Editor.qml Qml/Colors.qml
-        QML_FILES Qml/WindowDragHandler.qml QMl/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml
-        # QML_FILES Qml/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml Qml/WindowDragHandler.qml
+        QML_FILES Qml/WindowDragHandler.qml
+
+        #QMl/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml
+
         RESOURCES
             "icons/folder_closed.svg"
             "icons/folder_open.svg"
@@ -30,11 +34,9 @@ qt_add_qml_module(appShellCoder
             "icons/resize.svg"
             "icons/qt_logo.svg"
             "icons/app_icon.svg"
-        # URI FIleSystemMode
-        #     VERSION 1.0
-
         QML_FILES Qml/Terminal.qml
-        QML_FILES Qml/HandleView.qml    #     QML_FILES Qml/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml Qml/WindowDragHandler.qml
+        QML_FILES Qml/HandleView.qml
+        QML_FILES Qml/FileSystemView.qml   #     QML_FILES Qml/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml Qml/WindowDragHandler.qml
         #     SOURCES filesystemmodel.h filesystemmodel.cpp
 )
 target_compile_features(appShellCoder PRIVATE cxx_std_20)

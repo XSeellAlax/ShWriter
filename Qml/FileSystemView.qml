@@ -13,7 +13,7 @@ Rectangle {
     id: root
 
     signal fileClicked(string filePath)
-    property alias rootIndex: fileSystemTreeView.rootIndex
+    //property alias rootIndex: fileSystemTreeView.rootIndex
 
     FileSystemModule
     {
@@ -31,7 +31,7 @@ Rectangle {
 
         anchors.fill: parent
         model: fileSystemModule
-        rootIndex: fileSystemModule.rootIndex
+        //rootIndex: fileSystemModule.rootIndex
         boundsBehavior: Flickable.StopAtBounds
         boundsMovement: Flickable.StopAtBounds
         clip: true

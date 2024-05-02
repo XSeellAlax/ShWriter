@@ -13,17 +13,15 @@ Item {
     property color selectonColor:"#0078D7"
     property alias textDocument: edit.textDocument
     property string currFilePath : ""
-    // background: Rectangle {
-    //     color: "#222436"
-    //     anchors.fill: parent
-    // }
+
     Rectangle {
         color: "#222436"
         anchors.fill: parent
     }
     onCurrFilePathChanged: {
         // fileIO.open("")
-        updateText();
+        // updateText();
+        fileIOScript.sentMessage();
     }
 
     //  文件读取
@@ -254,22 +252,16 @@ Item {
     function readFile()
     {
         edit.text = "";
-        fileIO.open();
-        while(fileIO.atEnd()===false){
-            edit.text +=fileIO.readline();
-        }
+        edit.text = fileIO.read();
         console.log("文件读取成功");
-        console.log(fileIO.getFilePath())
+        console.log(fileIO.getFileName())
     }
     function updateText()
     {
         edit.text = "";
-        fileIO.open(currFilePath);
-        while(fileIO.atEnd()===false){
-            edit.text +=fileIO.readline();
-        }
-        console.log("文件读取成功");
-        console.log(fileIO.getFilePath())
+        edit.text = fileIO.updateText(currFilePath);
+        // console.log();
+        console.log(fileIO.getFilePath() + "读取成功")
     }
 
     function clear()
@@ -279,10 +271,9 @@ Item {
 
     function save()
     {
-        var context = edit.text
-        fileIO.saveFile(context);
-        //FileRW.saveFile(context);
-        console.log(fileIO.getFilePath())
+        var context = edit.text;
+        fileIO.save(context);
+        console.log(fileIO.getFilePath()+"保存成功");
 
     }
 }

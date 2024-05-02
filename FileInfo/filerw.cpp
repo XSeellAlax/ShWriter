@@ -68,6 +68,28 @@ void FileRW::saveFile(QString text)
     file.close();
 
 }
+
+void FileRW::close()
+{
+    if(file.isOpen()==true)
+        file.close();
+}
+
+// void FileRW::updateText(const QString& currFilePath)
+// {
+//     if(file.isOpen()){
+//         file.close();
+//     }else{
+//         file.setFileName(currFilePath);
+//         file.open(QIODevice::ReadOnly);
+//         QByteArray
+//         while(file.atEnd())
+//         {
+
+//         }
+
+//     }
+// }
 /*
 QString FileRW::readFile()
 {

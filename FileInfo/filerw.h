@@ -18,9 +18,12 @@ public:
     Q_INVOKABLE bool open();
     Q_INVOKABLE bool open(QString pathName);
     Q_INVOKABLE void saveFile(QString text);
+    Q_INVOKABLE void close();
     Q_INVOKABLE QString getFilePath(){
         return _path;
     }
+
+    // Q_INVOKABLE void updateText(const QString& currFilePath);
 
     Q_INVOKABLE QString getOpenFileName(){
         auto dir = QFileDialog::getExistingDirectory();
