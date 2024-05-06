@@ -5,7 +5,6 @@ import QtQuick.Layouts
 import QtQuick.Dialogs
 import FileIO
 
-//import ShellCoder
 import "./Qml"
 ApplicationWindow {
 
@@ -95,7 +94,11 @@ ApplicationWindow {
         Menu {
             title: qsTr("调试(&D)")
             MenuItem {
-                text: qsTr("&Change")
+                text: qsTr("&运行")
+                onTriggered: {
+                    cmd.visible = true
+                    commandRunner.runCommand(editor.text)
+                }
             }
             MenuItem {
                 text: qsTr("&New File")
@@ -172,7 +175,7 @@ ApplicationWindow {
                     // Shows the help text.
                     FileSystemView {
                         id: fileSystemView
-                        color: Colors.surface1
+                        // color: "#171819"
                         onFileClicked: path => editor.currFilePath = path
                         // visible: {
                         //     if(currentFilePath===""){
@@ -188,7 +191,7 @@ ApplicationWindow {
                                  + "You can edit the files but they won't be changed on the file system.\n\n"
                                  + "Click on the folder icon to the left to get started.")
                         wrapMode: TextArea.Wrap
-                        color: Colors.text
+                        color: "#D4BE98"
                     }
                 }
             }
@@ -198,7 +201,7 @@ ApplicationWindow {
                 SplitView.fillWidth: true
                 SplitView.fillHeight: true
                 SplitView {
-                    SplitView.fillHeight: ture
+                    SplitView.fillHeight: true
                     SplitView.minimumHeight: parent.height/3*2
 // 主Edit部分 -----------------------------------------------------------------------
                     Editor {
@@ -275,20 +278,27 @@ ApplicationWindow {
                     }
                 }
 
-                Rectangle {
+                TextArea {
                     id: cmd
                     SplitView.minimumHeight: parent.height/4
                     height: parent.height/4
-                    // SplitView.maximumHeight: parent.height/2
-                    // SplitView.fillWidth: true
-                    // color: "lightgray"
-                    // Label {
-                    //     text: "Terminal"
-                    //     anchors.centerIn: parent
-                    // }
-                    visible: true
+                    readOnly: true
+                    visible: false
+//                    color: "white"
+                    //text: "output: "
                 }
             }
+        }
+    }
+    Connections {
+        target: commandRunner
+        onOutputReceived: {
+            cmd.text = ""
+            cmd.text = "Output: " + output + '\n'
+
+        }
+        onErrorOccurred: {
+            cmd.text = "Error: " + error + '\n'
         }
     }
 }

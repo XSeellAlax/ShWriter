@@ -20,12 +20,12 @@ qt_add_qml_module(appShellCoder
     VERSION 1.0
     QML_FILES 
         Main.qml
-        SOURCES
-            filesystemmodel.h
-            filesystemmodel.cpp
-            linenumbermodel.h
-            linenumbermodel.cpp
-            QML_FILES Qml/Sidebar.qml Qml/MEditor.qml Qml/Colors.qml
+        # SOURCES
+        #     filesystemmodel.h
+        #     filesystemmodel.cpp
+        #     linenumbermodel.h
+        #     linenumbermodel.cpp
+        QML_FILES Qml/Sidebar.qml Qml/MEditor.qml Qml/Colors.qml
         QML_FILES Qml/WindowDragHandler.qml
 
         RESOURCES
@@ -60,11 +60,13 @@ set_target_properties(appShellCoder PROPERTIES
 ## add sublib
 add_subdirectory(FileInfo)
 add_subdirectory(FileSysteamModule)
+add_subdirectory(CommandRunner)
 target_link_libraries(appShellCoder
     PRIVATE 
         Qt6::Quick
         FileInfo
         FileSysteamModule
+        CommandRunner
 )
 # 设置单例类
 # set_source_files_properties(Qml/Colors.qml

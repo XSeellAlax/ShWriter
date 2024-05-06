@@ -1,9 +1,11 @@
 #include <QGuiApplication>
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include "FileInfo/fileio.h"
 #include "FileSysteamModule/filesystemmodel.h"
 //#include "linenumbermodel.h"
+#include "CommandRunner/commandrunner.h"
 #include <QIcon>
 int main(int argc, char *argv[])
 {
@@ -14,11 +16,14 @@ int main(int argc, char *argv[])
     QGuiApplication::setWindowIcon(QIcon(":/qt/qml/FileSystemModule/icons/app_icon.svg"));
     QQmlApplicationEngine engine;
 
+    CommandRunner commandRunner;
 
     qmlRegisterType<FileIO,1>("FileIO",1,0,"FileIO");
     qmlRegisterType<FileSystemModel,1>("FileSystemModule",1,0,"FileSystemModule");
     //qmlRegisterType<LineNumberModel,1>("LineNumberModel",1,0,"LineNumberModel");
 
+    engine.rootContext()->setContextProperty("commandRunner", &commandRunner);
+    // engine.rootContext()->se
 
     const QUrl url(u"qrc:/ShellCoder/Main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed,

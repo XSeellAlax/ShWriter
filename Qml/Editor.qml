@@ -11,6 +11,8 @@ Item {
     property real fontPointSize: 15
 
     property string currFilePath: ""
+
+    property string text: edit.text
     FileIO {
         id: fileIO
     }
@@ -113,7 +115,7 @@ Item {
                     id: lineLight
                     width: parent.width
                     height: edit.paintedHeight/edit.lineCount
-                    y: cursorY
+                    y: 0
                     color: "yellow"
                     opacity: 0.2
                     z: -1
