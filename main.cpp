@@ -2,8 +2,8 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include "FileInfo/fileio.h"
-#include "filesystemmodel.h"
-#include "linenumbermodel.h"
+#include "FileSysteamModule/filesystemmodel.h"
+//#include "linenumbermodel.h"
 #include <QIcon>
 int main(int argc, char *argv[])
 {
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<FileIO,1>("FileIO",1,0,"FileIO");
     qmlRegisterType<FileSystemModel,1>("FileSystemModule",1,0,"FileSystemModule");
-    qmlRegisterType<LineNumberModel,1>("LineNumberModel",1,0,"LineNumberModel");
+    //qmlRegisterType<LineNumberModel,1>("LineNumberModel",1,0,"LineNumberModel");
 
 
     const QUrl url(u"qrc:/ShellCoder/Main.qml"_qs);
