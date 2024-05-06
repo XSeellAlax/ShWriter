@@ -8,6 +8,7 @@ qt_standard_project_setup()
 
 qt_add_executable(appShellCoder  main.cpp)
 
+# QML_IMPORT_NAME = qml.
 
 
 qt_add_qml_module(appShellCoder
@@ -18,10 +19,10 @@ qt_add_qml_module(appShellCoder
         SOURCES
             filesystemmodel.h
             filesystemmodel.cpp
-        QML_FILES Qml/Sidebar.qml Qml/Editor.qml Qml/Colors.qml
+            linenumbermodel.h
+            linenumbermodel.cpp
+            QML_FILES Qml/Sidebar.qml Qml/MEditor.qml Qml/Colors.qml
         QML_FILES Qml/WindowDragHandler.qml
-
-        #QMl/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml
 
         RESOURCES
             "icons/folder_closed.svg"
@@ -36,8 +37,10 @@ qt_add_qml_module(appShellCoder
             "icons/app_icon.svg"
         QML_FILES Qml/Terminal.qml
         QML_FILES Qml/HandleView.qml
-        QML_FILES Qml/FileSystemView.qml   #     QML_FILES Qml/FileSystemView.qml Qml/MyMenu.qml Qml/MyMenuBar.qml Qml/WindowDragHandler.qml
-        #     SOURCES filesystemmodel.h filesystemmodel.cpp
+        QML_FILES Qml/FileSystemView.qml
+        QML_FILES Qml/TextEditor.qml
+        QML_FILES Qml/LineNumberArea.qml
+        QML_FILES Qml/Editor.qml
 )
 target_compile_features(appShellCoder PRIVATE cxx_std_20)
 
@@ -57,10 +60,10 @@ target_link_libraries(appShellCoder
         FileInfo
 )
 # 设置单例类
-set_source_files_properties(Qml/Colors.qml
-    PROPERTIES
-        QT_QML_SINGLETON_TYPE TRUE
-)
+# set_source_files_properties(Qml/Colors.qml
+#     PROPERTIES
+#         QT_QML_SINGLETON_TYPE TRUE
+# )
 
 include(GNUInstallDirs)
 install(TARGETS appShellCoder

@@ -89,4 +89,8 @@ QString FileIO::updateText(const QString path)
     return context;
 }
 
-
+QString FileIO::getOpenFileName()
+{
+    auto path = QFileDialog::getExistingDirectory();
+    return path;
+}

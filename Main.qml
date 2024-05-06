@@ -4,6 +4,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
 import FileIO
+
 //import ShellCoder
 import "./Qml"
 ApplicationWindow {
@@ -23,7 +24,6 @@ ApplicationWindow {
     FileIO {
         id: fileIO
     }
-
     menuBar:
     MenuBar {
         Menu {
@@ -170,6 +170,18 @@ ApplicationWindow {
                     anchors.fill: parent
                     currentIndex: sidebar.currentTabIndex
                     // Shows the help text.
+                    FileSystemView {
+                        id: fileSystemView
+                        color: Colors.surface1
+                        onFileClicked: path => editor.currFilePath = path
+                        // visible: {
+                        //     if(currentFilePath===""){
+                        //         return false;
+                        //     }else{
+                        //         return true;
+                        //     }
+                        // }
+                    }
                     Text {
                         text: qsTr("This example shows how to use and visualize the file system.\n\n"
                                  + "Customized Qt Quick Components have been used to achieve this look.\n\n"
@@ -177,18 +189,6 @@ ApplicationWindow {
                                  + "Click on the folder icon to the left to get started.")
                         wrapMode: TextArea.Wrap
                         color: Colors.text
-                    }
-                    FileSystemView {
-                        id: fileSystemView
-                        color: Colors.surface1
-                        onFileClicked: path => editor.currFilePath = path
-                        visible: {
-                            if(currentFilePath===""){
-                                return false;
-                            }else{
-                                return true;
-                            }
-                        }
                     }
                 }
             }
@@ -200,12 +200,53 @@ ApplicationWindow {
                 SplitView {
                     SplitView.fillHeight: ture
                     SplitView.minimumHeight: parent.height/3*2
+// 主Edit部分 -----------------------------------------------------------------------
                     Editor {
-                        id: editor
                         SplitView.minimumWidth: parent.width/4
                         SplitView.fillWidth: true
-                        // height: parent.height/2
+                        id: editor
                     }
+
+                    // Item {
+                    //     SplitView.minimumWidth: parent.width/4
+                    //     SplitView.fillWidth: true
+                    //     id: mainEditView
+                    //     // TabBar {
+                    //     //     id: editBar
+                    //     //     width: parent.width
+                    //     //     z : 5
+                    //     //     // model: 5
+                    //     //     Repeater {
+                    //     //         model: 5
+                    //     //         delegate: TabButton{
+                    //     //             text: editor.currFilePath==""?"新文件":editor.currFilePath
+                    //     //         }
+                    //     //     }
+
+                    //     // }
+                    //     // StackLayout {
+                    //     //     anchors.top: editBar.bottom
+                    //     //     width: parent.width
+                    //     //     height: parent.height - editBar.height
+                    //     //     currentIndex: editBar.currentIndex
+                    //     //     Repeater{
+                    //     //         model: 5
+                    //     //         delegate: TextEditor {
+                    //     //             id: editor
+                    //     //             anchors.fill: parent
+                    //     //         }
+                    //     //     }
+                    //     // }
+
+                    //     // TextEditor {
+                    //     //     id: editor
+                    //     //     // activeFocus: true
+                    //     //     SplitView.minimumWidth: parent.width/4
+                    //     //     SplitView.fillWidth: true
+                    //     //     // height: parent.height/2
+                    //     // }
+
+                    // }
                     Rectangle {
                         // color: "yellow"
                         id: tools
@@ -234,7 +275,7 @@ ApplicationWindow {
                     }
                 }
 
-                Terminal {
+                Rectangle {
                     id: cmd
                     SplitView.minimumHeight: parent.height/4
                     height: parent.height/4

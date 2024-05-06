@@ -16,6 +16,7 @@ public:
     {
         return _path;
     }
+    Q_INVOKABLE QString getOpenFileName();
 private:
     QString _path;
     QString _dir;

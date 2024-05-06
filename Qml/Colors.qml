@@ -3,7 +3,7 @@
 
 import QtQuick
 
-pragma Singleton
+// pragma Singleton
 
 QtObject {
     readonly property color background: "#292828"
