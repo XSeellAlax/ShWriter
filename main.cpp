@@ -34,9 +34,9 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     QGuiApplication::setOrganizationName("QtProject");
-    QGuiApplication::setApplicationName("File System Explorer");
+    QGuiApplication::setApplicationName("ShCoder");
     QGuiApplication::setApplicationVersion(QT_VERSION_STR);
-    QGuiApplication::setWindowIcon(QIcon(":/qt/qml/FileSystemModule/icons/app_icon.svg"));
+    QGuiApplication::setWindowIcon(QIcon("../icons/app_icon.svg"));
     QQmlApplicationEngine engine;
 
     CommandRunner commandRunner;
