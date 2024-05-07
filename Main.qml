@@ -205,6 +205,7 @@ ApplicationWindow {
                     SplitView.minimumHeight: parent.height/3*2
 // 主Edit部分 -----------------------------------------------------------------------
                     Editor {
+                        objectName: "textEditor"
                         SplitView.minimumWidth: parent.width/4
                         SplitView.fillWidth: true
                         id: editor

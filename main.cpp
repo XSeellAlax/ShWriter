@@ -6,7 +6,30 @@
 #include "FileSysteamModule/filesystemmodel.h"
 //#include "linenumbermodel.h"
 #include "CommandRunner/commandrunner.h"
+#include "syntaxhighlighter/highlighter.h"
 #include <QIcon>
+#include <QQuickTextDocument>
+
+template <class T> T childObject(QQmlApplicationEngine& engine,
+              const QString& objectName,
+              const QString& propertyName)
+{
+    QList<QObject*> rootObjects = engine.rootObjects();
+    foreach (QObject* object, rootObjects)
+    {
+        QObject* child = object->findChild<QObject*>(objectName);
+        if (child != 0)
+        {
+            std::string s = propertyName.toStdString();
+            QObject* object = child->property(s.c_str()).value<QObject*>();
+            Q_ASSERT(object != 0);
+            T prop = dynamic_cast<T>(object);
+            Q_ASSERT(prop != 0);
+            return prop;
+        }
+    }
+    return (T) 0;
+}
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -33,5 +56,11 @@ int main(int argc, char *argv[])
     engine.load(url);
 
 
-    return app.exec();
+    QQuickTextDocument* doc = childObject<QQuickTextDocument*>(engine, "textEditor", "textDocument");
+    Q_ASSERT(doc != 0);
+
+    Highlighter* highlight = new Highlighter(doc->textDocument());
+    int ret = app.exec();
+    delete highlight;
+    return ret;
 }

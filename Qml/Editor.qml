@@ -13,6 +13,8 @@ Item {
     property string currFilePath: ""
 
     property string text: edit.text
+
+    property alias textDocument: edit.textDocument
     FileIO {
         id: fileIO
     }
@@ -93,6 +95,7 @@ Item {
                 height: flick.height
                 focus: true
                 font.pointSize: fontPointSize
+                font.family: "Courier"
                 selectionColor: "#C3C3FF"
                 cursorVisible: true
                 cursorDelegate: cursor_Delegate
