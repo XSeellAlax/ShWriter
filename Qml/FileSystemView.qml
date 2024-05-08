@@ -71,13 +71,13 @@ Rectangle {
 
             contentItem: Text {
                 text: treeDelegate.fileName
-                color: Colors.text
+                // color: Colors.text
             }
 
             background: Rectangle {
                 color: (treeDelegate.index === fileSystemTreeView.lastIndex)
-                    ? Colors.selection
-                    : (hoverHandler.hovered ? Colors.active : "transparent")
+                    ? "gray"
+                    : (hoverHandler.hovered ? "lightbule" : "transparent")
             }
 
             // We color the directory icons with this MultiEffect, where we overlay
@@ -93,13 +93,13 @@ Rectangle {
                     const isFile = treeDelegate.index === fileSystemTreeView.lastIndex
                                     && !treeDelegate.hasChildren;
                     if (isFile)
-                        return Qt.lighter(Colors.folder, 3)
+                        return Qt.lighter("yellow", 3)
 
                     const isExpandedFolder = treeDelegate.expanded && treeDelegate.hasChildren;
                     if (isExpandedFolder)
-                        return Colors.color2
+                        return "yellow"
                     else
-                        return Colors.folder
+                        return "red"
                 }
             }
 
@@ -151,7 +151,7 @@ Rectangle {
                 implicitWidth: 6
                 implicitHeight: 6
 
-                color: Colors.color1
+                // color: Colors.color1
                 opacity: fileSystemTreeView.movingVertically ? 0.5 : 0.0
 
                 Behavior on opacity {

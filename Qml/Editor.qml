@@ -11,6 +11,10 @@ Item {
     property real fontPointSize: 15
 
     property string currFilePath: ""
+
+    property string text: edit.text
+
+    property alias textDocument: edit.textDocument
     FileIO {
         id: fileIO
     }
@@ -91,6 +95,7 @@ Item {
                 height: flick.height
                 focus: true
                 font.pointSize: fontPointSize
+                font.family: "Courier"
                 selectionColor: "#C3C3FF"
                 cursorVisible: true
                 cursorDelegate: cursor_Delegate
@@ -113,7 +118,7 @@ Item {
                     id: lineLight
                     width: parent.width
                     height: edit.paintedHeight/edit.lineCount
-                    y: cursorY
+                    y: 0
                     color: "yellow"
                     opacity: 0.2
                     z: -1

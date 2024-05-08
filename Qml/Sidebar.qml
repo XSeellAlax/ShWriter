@@ -12,7 +12,7 @@ Rectangle {
     property alias currentTabIndex: topBar.currentIndex
     required property ApplicationWindow dragWindow
     readonly property int tabBarSpacing: 10
-    color: Colors.surface2
+    // color: Colors.surface2
 
     component SidebarEntry: Button {
         id: sidebarButton
@@ -39,7 +39,7 @@ Rectangle {
             height: sidebarButton.icon.height * 1.2
 
             visible: sidebarButton.checked
-            color: Colors.color1
+            // color: Colors.color1
         }
     }
 
