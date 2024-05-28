@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.26)
 
 project(ShellCoder VERSION 0.1 LANGUAGES CXX)
 
@@ -7,14 +7,11 @@ find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
 qt_standard_project_setup()
 
 qt_add_executable(appShellCoder  main.cpp
-    #filesystemmodel.h
-    #filesystemmodel.cpp
-
 )
 
 # QML_IMPORT_NAME = qml.
 
-
+set(CMAKE_PREFIX_PATH "D:/opt/Qt/6.7.0/mingw_64")
 qt_add_qml_module(appShellCoder
     URI ShellCoder
     VERSION 1.0
@@ -34,13 +31,27 @@ qt_add_qml_module(appShellCoder
             "icons/resize.svg"
             "icons/qt_logo.svg"
             "icons/app_icon.svg"
+            "icons/brands-app-store-ios.svg"
+            "icons/play.svg"
+            "icons/image.svg"
+            "icons/flower.svg"
+            "icons/settings.svg"
         QML_FILES Qml/Terminal.qml
         QML_FILES Qml/HandleView.qml
         QML_FILES Qml/FileSystemView.qml
         QML_FILES Qml/TextEditor.qml
         QML_FILES Qml/LineNumberArea.qml
         QML_FILES Qml/Editor.qml
+        QML_FILES Qml/ImageView.qml
+        QML_FILES Qml/ImageList.qml
+        QML_FILES Qml/ResizeButton.qml
+        QML_FILES Qml/NMenuBar.qml
+        QML_FILES Qml/NMenu.qml
+        QML_FILES Qml/FooterView.qml
+        # QML_FILES Qml/MyMenu.qml
+        # QML_FILES Qml/MyMenuBar.qml
 )
+
 target_compile_features(appShellCoder PRIVATE cxx_std_20)
 
 set_target_properties(appShellCoder PROPERTIES
@@ -60,6 +71,8 @@ add_subdirectory(CommandRunner)
 
 add_subdirectory(Syntaxhighlighter)
 
+add_subdirectory(ImageViewer)
+
 target_link_libraries(appShellCoder
     PRIVATE 
         Qt6::Quick
@@ -67,6 +80,7 @@ target_link_libraries(appShellCoder
         FileSysteamModule
         CommandRunner
         Syntaxhighlighter
+        ImageViewer
 )
 # 设置单例类
 # set_source_files_properties(Qml/Colors.qml

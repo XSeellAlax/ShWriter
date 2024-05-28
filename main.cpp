@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setOrganizationName("QtProject");
     QGuiApplication::setApplicationName("ShCoder");
     QGuiApplication::setApplicationVersion(QT_VERSION_STR);
-    QGuiApplication::setWindowIcon(QIcon("../icons/app_icon.svg"));
+    QGuiApplication::setWindowIcon(QIcon("../icons/icon.svg"));
     QQmlApplicationEngine engine;
 
     CommandRunner commandRunner;
