@@ -93,7 +93,7 @@ Rectangle {
             SidebarEntry {
                 id: filesystemTab
 
-                icon.source: "../icons/image.svg"
+                icon.source: "../icons/image_mini.svg"
                 checkable: true
             }
         }
@@ -118,7 +118,8 @@ Rectangle {
                 id: qtWebsiteButton
                 icon.source: "../icons/settings.svg"
                 checkable: false
-                onClicked: Qt.openUrlExternally("https://www.qt.io/")
+                onClicked: fontDialog.visible = !fontDialog.visible
+                    /*Qt.openUrlExternally("https://www.qt.io/")*/
             }
 
             // Opens the About Qt Window.
@@ -127,7 +128,21 @@ Rectangle {
 
                 icon.source: "../icons/play.svg"
                 checkable: false
-                onClicked: aboutQtWindow.visible = !aboutQtWindow.visible
+                onClicked: {
+                    cmd.visible = true
+                    commandRunner.runCommand(editor.text)
+                }
+            }
+
+            SidebarEntry {
+                id: runButton
+
+                icon.source: "../icons/bug.svg"
+                checkable: false
+                onClicked: {
+                    cmd.visible = true
+                    commandRunner.runCommand(editor.text)
+                }
             }
         }
     }

@@ -12,13 +12,13 @@ Item {
 
     property string currFilePath: ""
 
-    property string text: edit.text
+    property alias text: edit.text
 
     property alias textDocument: edit.textDocument
     FileIO {
         id: fileIO
     }
-
+    clip: true
     RowLayout {
         anchors.fill: parent
         Flickable {
@@ -33,6 +33,7 @@ Item {
             Column {
                 id: column
                 anchors.fill: parent
+
                 Repeater
                 {
                     id: lineNumbers
@@ -73,9 +74,10 @@ Item {
              contentWidth: edit.paintedWidth
              contentHeight: edit.paintedHeight
              clip: true
-            anchors {
-                left: lineNumber.right
-            }
+             // Layout.alignment: lineNumber.right
+            // anchors {
+            //     left: lineNumber.right
+            // }
              function ensureVisible(r)
              {
                  if (contentX >= r.x)
@@ -145,8 +147,15 @@ Item {
         }
         id: mouse
         propagateComposedEvents: true
-        onClicked: mouse.accepted = false;
-        onPressed: mouse.accepted = false;
+        onClicked: function(mouse) {
+            mouse.accepted = false;
+            edit.focus = true
+        }
+
+        onPressed: function(mouse){
+            mouse.accepted = false;
+        }
+
         onReleased: mouse.accepted = false;
         onDoubleClicked: mouse.accepted = false;
         onPositionChanged: mouse.accepted = false;
@@ -237,6 +246,7 @@ Item {
     {
         edit.text = "";
         edit.text = fileIO.read();
+        currentFilePath = fileIO.getFileName()
         console.log("文件读取成功");
         console.log(fileIO.getFileName())
     }

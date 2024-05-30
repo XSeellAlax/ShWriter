@@ -12,7 +12,7 @@ pragma ComponentBehavior: Bound
 // This is the file system view which gets populated by the C++ model.
 Rectangle {
     id: root
-
+    property alias open_shell_folder: open_shell_folder
     signal fileClicked(string filePath)
     //property alias rootIndex: fileSystemTreeView.rootIndex
 
@@ -55,7 +55,7 @@ Rectangle {
         }
 
         Button{
-            id: open_bth2
+            id: open_shell_folder
             text: "打开文件夹"
             height: 25
             width: parent.width/8 * 7
@@ -108,7 +108,7 @@ Rectangle {
                     x: treeDelegate.leftMargin + (treeDelegate.depth * treeDelegate.indentation)
                     anchors.verticalCenter: parent.verticalCenter
                     source: treeDelegate.hasChildren ? (treeDelegate.expanded
-                                ? "../icons/folder_open.svg" : "../icons/folder_closed.svg")
+                                ? "../icons/chevron-down.svg" : "../icons/chevron-right.svg")
                             : "../icons/generic_file.svg"
                     sourceSize.width: 20
                     sourceSize.height: 20

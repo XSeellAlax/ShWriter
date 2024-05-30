@@ -85,5 +85,6 @@ void FileSystemModel::setInitialDirectory(const QString &path)
 
 QString FileSystemModel::getDefaultRootDir()
 {
-    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    return QDir::currentPath();
+    // return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 }

@@ -21,7 +21,10 @@ Highlighter::Highlighter(QTextDocument *parent)
         QStringLiteral("\\bslots\\b"), QStringLiteral("\\bstatic\\b"), QStringLiteral("\\bstruct\\b"),
         QStringLiteral("\\btemplate\\b"), QStringLiteral("\\btypedef\\b"), QStringLiteral("\\btypename\\b"),
         QStringLiteral("\\bunion\\b"), QStringLiteral("\\bunsigned\\b"), QStringLiteral("\\bvirtual\\b"),
-        QStringLiteral("\\bvoid\\b"), QStringLiteral("\\bvolatile\\b"), QStringLiteral("\\bbool\\b")
+        QStringLiteral("\\bvoid\\b"), QStringLiteral("\\bvolatile\\b"), QStringLiteral("\\bbool\\b"),
+        QStringLiteral("\\bfor\\b"),QStringLiteral("\\bloop\\b"),
+        QStringLiteral("\\bprintf\\b"),QStringLiteral("\\becho\\b"),
+        QStringLiteral("\\bdo\\b"),QStringLiteral("\\bdone\\b")
     };
     for (const QString &pattern : keywordPatterns) {
         rule.pattern = QRegularExpression(pattern);

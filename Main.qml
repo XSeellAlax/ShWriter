@@ -4,31 +4,31 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
 import FileIO
-//import QtQuick.Controls
+import QtQuick.Controls.Basic
 import "./Qml"
-// import "./ImageViewer/ImageViewer.qml"
-
-
+import QtQuick.Window
+import ImageViewer
+// import "./ImageView/ImageViewControls.qml"
 ApplicationWindow {
 
     property string currentFilePath: ""
+
     width: 1100
     height: 600
-    // visible: true
     id: root
 
     minimumWidth: 200
     minimumHeight: 100
     visible: true
     title: "ShCoder"
-    // flags: Qt.Window | Qt.FramelessWindowHint
+
 
     FileIO {
         id: fileIO
     }
 
 
-    // Menu Bar
+// -----------------------------------Menu Bar-----------------------------
     menuBar:
     MenuBar {
         Menu {
@@ -70,7 +70,7 @@ ApplicationWindow {
         }
         Menu {
             height: 20
-            title: "编辑"
+            title: "编辑(&E)"
         }
 
         Menu {
@@ -120,13 +120,6 @@ ApplicationWindow {
         }
 
     }
-
-    // footer: FooterView {
-    //     width: parent.width
-    //     z: 999
-    //     height: 20
-    // }
-
     // action -----------------------------------------------
     Action {
         id: toolsVisble
@@ -139,6 +132,7 @@ ApplicationWindow {
         id: readFile
         onTriggered: {
             editor.readFile()
+            currentFilePath = editor.currFilePath
         }
     }
 
@@ -152,7 +146,7 @@ ApplicationWindow {
     Action {
         id: run
         onTriggered: {
-            cmd.visible = true
+            cmd.visible = !cmd.visible
             commandRunner.runCommand(editor.text)
         }
     }
@@ -182,10 +176,20 @@ ApplicationWindow {
     onCurrentFilePathChanged: {
         fileSystemView.setDir(currentFilePath);
     }
+    // ImageViewControls {
+    //     id: controls
+    //     anchors.left: parent.left
+    //     anchors.top: parent.top
+    //     anchors.margins: 20
+    //     width: 100
+    //     height: 100
+    // }
+
 
     RowLayout {
         anchors.fill: parent
         spacing: 0
+        clip: true
 
         // Stores the buttons that navigate the application.
         Sidebar {
@@ -199,7 +203,6 @@ ApplicationWindow {
             width: 1
             height: parent.height
         }
-
         // Allows resizing parts of the UI.
         SplitView {
             Layout.fillWidth: true
@@ -253,6 +256,7 @@ ApplicationWindow {
             }
             StackLayout {
                 currentIndex: sidebar.currentTabIndex
+//---------------------------------第一部分----------------------------------------------
                 SplitView {
                     orientation: Qt.Vertical
                     SplitView.fillWidth: true
@@ -261,65 +265,18 @@ ApplicationWindow {
                         SplitView.fillHeight: true
                         SplitView.minimumHeight: parent.height/3*2
     // 主Edit部分 -----------------------------------------------------------------------
-
-                        ColumnLayout {
+                        Editor {
+                            visible: true
+                            objectName: "textEditor"
+                            width: parent.width
+                            height: parent.height
                             SplitView.minimumWidth: parent.width/4
                             SplitView.fillWidth: true
-                            clip: true
-                            TabBar {
-                                id: tabBar
-                                height: 20
-                                TabButton {
-                                    text: "Unint1"
-                                }
-                                Rectangle {
-                                    Text {
-                                        id: name
-                                        text: qsTr("text")
-                                    }
-                                }
-
-                                TabButton{
-                                    text: "Unint2"
-                                }
-                            }
-                            StackLayout {
-                                currentIndex: tabBar.currentIndex
-                                Editor {
-                                    visible: true
-                                    objectName: "textEditor"
-                                    anchors.top: tabBar.bottom
-                                    SplitView.minimumWidth: parent.width/4
-                                    SplitView.fillWidth: true
-                                    SplitView.fillHeight: true
-                                    id: editor
-                                }
-                                Editor {
-                                    visible: true
-                                    objectName: "textEditor"
-                                    anchors.top: tabBar.bottom
-                                    SplitView.minimumWidth: parent.width/4
-                                    SplitView.fillWidth: true
-                                    SplitView.fillHeight: true
-                                    // id: editor
-                                }
-                            }
+                            SplitView.fillHeight: true
+                            id: editor
                         }
 
-
-
-                        Rectangle {
-                            id: imgView
-                            visible: false
-                            color: "black"
-                            SplitView.minimumWidth: parent.width/4
-                            SplitView.fillWidth: true
-                            ImageView{
-                                anchors.fill: parent
-                            }
-
-                        }
-
+    // 工具栏部分 -----------------------------------------------------------------------------
                         Rectangle {
                             // color: "yellow"
                             id: tools
@@ -328,7 +285,7 @@ ApplicationWindow {
                             visible: false
                         }
                     }
-
+    //------------------------------------handle部分---------------------------------------------
                     handle: Rectangle {
                         implicitHeight: 5
                         // color: SplitHandle.pressed ? Colors.color2 : Colors.background
@@ -342,38 +299,18 @@ ApplicationWindow {
                             }
                         }
                     }
-
-                    TextArea {
+    //------------------------------------------终端部分----------------------------------------------
+                    Terminal {
                         id: cmd
                         SplitView.minimumHeight: parent.height/4
-                        height: parent.height/4
-    //                    color: "red"
-                        background: Rectangle{
-                            color: "green"
-                        }
-
-                        readOnly: true
                         visible: false
-    //                    color: "white"
-                        //text: "output: "
+//                        SplitView.maximumHeight: parent.height/3 * 2
+//                        SplitView.fillHeight: true
                     }
-                }
 
-                // SplitView {
-                //     orientation: Qt.Vertical
-                //     SplitView.fillWidth: true
-                //     SplitView.fillHeight: true
-                //     SplitView {
-                //         SplitView.fillHeight: true
-                //         SplitView.minimumHeight: parent.height/3 * 2
-                //         ImageList {
-                //             Spli
-                //         }
-                //     }
-                // }
-                ImageView {
+//--------------------------------------------第二部分-------------------------------------------------
+                ImageViewer {
                     id: image_view
-                    anchors.fill: parent
                     // anchors.fill: parent
                     Rectangle {
                         anchors.fill: parent
@@ -382,32 +319,55 @@ ApplicationWindow {
                         z: -1
                     }
                 }
-                // Rectangle {
-                //     anchors.fill: parent
-                //     color: "gray"
-                //     opacity: 0.5
-
-                // }
             }
 
 
         }
     }
-    Connections {
-        target: commandRunner
-        onOutputReceived: {
-            cmd.text = ""
-            cmd.text = "Output: " + output + '\n'
 
-        }
-        onErrorOccurred: {
-            cmd.text = "Error: " + error + '\n'
-        }
+    //设置对话框
+    SettingView {
+        id: fontDialog
+        visible: false
     }
+    //信号连接
+//    Connections {
+//        target: commandRunner
+//        function onOutputReceived() {
+//            cmd.text = ""
+//            cmd.text = "Output: " + output + '\n'
+
+//        }
+//        function onErrorOccurred() {
+//            cmd.text = "Error: " + error + '\n'
+//        }
+//    }
 
     Connections {
         target: image_list.open_image_bth
-        onClicked:image_view.open_image_folder()
+        function onClicked(){
+            image_view.open_image_folder()
+        }
     }
+    Connections {
+        target: fileSystemView.open_shell_folder
+        function onClicked() {
+
+            fileSystemView.setDir(fileIO.getOpenFolder())
+
+        }
+    }
+//    Connections {
+//        target: commandRunner
+//        function onOutputReceived(){
+////            outputModel.append("output: ")
+//            cmd.outputModel.append({"output": output, "type": "output"});
+//        }
+//        function onErrorOccurred() {
+////            outputModel.append("output: ")
+//            cmd.outputModel.append({"output": error, "type": "error"});
+//        }
+//    }
+
 }
 

@@ -9,6 +9,9 @@
 #include "Syntaxhighlighter/highlighter.h"
 #include <QIcon>
 #include <QQuickTextDocument>
+#include <QtQml/qqmlextensionplugin.h>
+
+Q_IMPORT_QML_PLUGIN(ImageViewerPlugin)
 
 template <class T> T childObject(QQmlApplicationEngine& engine,
               const QString& objectName,
@@ -36,7 +39,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setOrganizationName("QtProject");
     QGuiApplication::setApplicationName("ShCoder");
     QGuiApplication::setApplicationVersion(QT_VERSION_STR);
-    QGuiApplication::setWindowIcon(QIcon("../icons/icon.svg"));
+    // QGuiApplication::setWindowIcon(QIcon("../icons/icon.svg"));
     QQmlApplicationEngine engine;
 
     CommandRunner commandRunner;
@@ -46,7 +49,6 @@ int main(int argc, char *argv[])
     //qmlRegisterType<LineNumberModel,1>("LineNumberModel",1,0,"LineNumberModel");
 
     engine.rootContext()->setContextProperty("commandRunner", &commandRunner);
-    // engine.rootContext()->se
 
     const QUrl url(u"qrc:/ShellCoder/Main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed,
@@ -54,6 +56,8 @@ int main(int argc, char *argv[])
         Qt::QueuedConnection);
     // engine.l
     engine.load(url);
+    // engine.addPluginPath("./Plug")
+    // engine.addImportPath();
 
 
     QQuickTextDocument* doc = childObject<QQuickTextDocument*>(engine, "textEditor", "textDocument");

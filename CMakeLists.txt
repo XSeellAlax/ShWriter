@@ -17,7 +17,9 @@ qt_add_qml_module(appShellCoder
     VERSION 1.0
     QML_FILES 
         Main.qml
-        QML_FILES Qml/Sidebar.qml Qml/MEditor.qml Qml/Colors.qml
+        QML_FILES Qml/Sidebar.qml Qml/Colors.qml
+        # Qml/MEditor.qml
+
         QML_FILES Qml/WindowDragHandler.qml
 
         RESOURCES
@@ -36,20 +38,25 @@ qt_add_qml_module(appShellCoder
             "icons/image.svg"
             "icons/flower.svg"
             "icons/settings.svg"
+            "icons/image_mini.svg"
+            "icons/chevron-down.svg"
+            "icons/chevron-right.svg"
+            "icons/bug.svg"
         QML_FILES Qml/Terminal.qml
         QML_FILES Qml/HandleView.qml
         QML_FILES Qml/FileSystemView.qml
-        QML_FILES Qml/TextEditor.qml
         QML_FILES Qml/LineNumberArea.qml
         QML_FILES Qml/Editor.qml
-        QML_FILES Qml/ImageView.qml
-        QML_FILES Qml/ImageList.qml
-        QML_FILES Qml/ResizeButton.qml
-        QML_FILES Qml/NMenuBar.qml
-        QML_FILES Qml/NMenu.qml
         QML_FILES Qml/FooterView.qml
+        QML_FILES Qml/SettingView.qml
+        # QML_FILES Qml/ImageList.qml
         # QML_FILES Qml/MyMenu.qml
         # QML_FILES Qml/MyMenuBar.qml
+        # QML_FILES Qml/ResizeButton.qml
+        # QML_FILES Qml/NMenuBar.qml
+        # QML_FILES Qml/NMenu.qml
+        # QML_FILES Qml/ImageView.qml
+        # QML_FILES Qml/TextEditor.qml
 )
 
 target_compile_features(appShellCoder PRIVATE cxx_std_20)
@@ -71,7 +78,7 @@ add_subdirectory(CommandRunner)
 
 add_subdirectory(Syntaxhighlighter)
 
-add_subdirectory(ImageViewer)
+add_subdirectory(Plugin/ImageViewer)
 
 target_link_libraries(appShellCoder
     PRIVATE 
@@ -81,12 +88,15 @@ target_link_libraries(appShellCoder
         CommandRunner
         Syntaxhighlighter
         ImageViewer
+        # ImageViewer
 )
 # 设置单例类
 # set_source_files_properties(Qml/Colors.qml
 #     PROPERTIES
 #         QT_QML_SINGLETON_TYPE TRUE
 # )
+
+# QML_IMPORT_PATH = $$PWD/../../.
 
 include(GNUInstallDirs)
 install(TARGETS appShellCoder

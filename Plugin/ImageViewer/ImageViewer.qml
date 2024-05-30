@@ -65,7 +65,7 @@ Item
             id: fileDelegate
             Rectangle {
                 // width: 100
-                width: navigationView.width - 20
+                width: parent.width - 20
                 height: 20
                 RowLayout{
                     spacing: 10
@@ -77,7 +77,9 @@ Item
                         // color: "#D8BFD8"
                         Image {
                             id: icons
-                            source: "../icons/image_mini.svg"
+                            // source: ":/icons/image_mini.svg"
+                            source: "qrc:/icons/image.svg"                            // source: qurl(":/icons/image_mini.svg")
+
                             anchors.fill: parent
                         }
                     }
