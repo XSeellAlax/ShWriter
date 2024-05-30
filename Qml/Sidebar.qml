@@ -129,8 +129,7 @@ Rectangle {
                 icon.source: "../icons/play.svg"
                 checkable: false
                 onClicked: {
-                    cmd.visible = true
-                    commandRunner.runCommand(editor.text)
+                    mainEditor.runFile()
                 }
             }
 
@@ -140,8 +139,7 @@ Rectangle {
                 icon.source: "../icons/bug.svg"
                 checkable: false
                 onClicked: {
-                    cmd.visible = true
-                    commandRunner.runCommand(editor.text)
+                    mainEditor.runFile()
                 }
             }
         }

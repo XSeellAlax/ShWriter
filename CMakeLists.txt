@@ -49,6 +49,7 @@ qt_add_qml_module(appShellCoder
         QML_FILES Qml/Editor.qml
         QML_FILES Qml/FooterView.qml
         QML_FILES Qml/SettingView.qml
+        QML_FILES Qml/WEditor.qml
         # QML_FILES Qml/ImageList.qml
         # QML_FILES Qml/MyMenu.qml
         # QML_FILES Qml/MyMenuBar.qml

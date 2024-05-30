@@ -17,9 +17,6 @@ qt_add_qml_module(ImageViewer
     QML_FILES ImageList.qml
     RESOURCES imageicon.qrc
     QML_FILES ImageViewItem.qml
-    # RESOURCE qrc:/icons/image.svg
-    # RESOURCE ../icons/image.svg
-    # SOURCES imageviewer.cpp imageviewer.h
 )
 
 
